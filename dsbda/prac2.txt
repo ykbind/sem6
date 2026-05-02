@@ -1,0 +1,79 @@
+# ============================================================
+# PRACTICAL: DATA WRANGLING II
+# Title: Academic Performance Dataset
+# ============================================================
+
+# 1. Import Libraries
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler, PowerTransformer
+
+# ============================================================
+# 2. Load Dataset from CSV File
+# ============================================================
+
+df = pd.read_csv("academic_performance.csv")
+
+print("Original Dataset:")
+print(df)
+
+# ============================================================
+# 3. Scan for Missing Values and Inconsistencies
+# ============================================================
+
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Fill missing values with mean
+df["Maths"] = df["Maths"].fillna(df["Maths"].mean())
+df["Science"] = df["Science"].fillna(df["Science"].mean())
+df["English"] = df["English"].fillna(df["English"].mean())
+df["Attendance"] = df["Attendance"].fillna(df["Attendance"].mean())
+
+# Fix inconsistent Attendance values (0 to 100 only) # keeps values between 0 to 100 reset are reseted to zero
+df["Attendance"] = df["Attendance"].clip(0, 100)
+
+print("\dataset After Handling Missing Values:")
+print(df)
+
+# ============================================================
+# 4. Detect and Handle Outliers using IQR Method
+# ============================================================
+
+numeric_cols = ["Maths", "Science", "English", "Attendance"]
+
+for col in numeric_cols:
+    Q1 = df[col].quantile(0.25) #A quantile divides sorted data into equal parts
+    Q3 = df[col].quantile(0.75) #It tells you the value below which a certain percentage of data falls.
+    IQR = Q3 - Q1
+
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
+
+    outliers = df[(df[col] < lower) | (df[col] > upper)]
+
+    print(f"\nOutliers in {col}:")
+    print(outliers[[col]])
+
+    # Replace outliers with median
+    median_value = df[col].median()
+    df.loc[(df[col] < lower) | (df[col] > upper), col] = median_value
+
+print("\nDataset After Outlier Treatment:")
+print(df)
+
+# ============================================================
+# 5. Data Transformation
+# ============================================================
+
+# A. Scale Attendance between 0 and 1
+scaler = MinMaxScaler() #MinMaxScaler is used to rescale numerical data into a fixed range, usually 0 to 1.
+df[["Attendance"]] = scaler.fit_transform(df[["Attendance"]])
+
+# B. Reduce skewness of Maths marks
+pt = PowerTransformer() #PowerTransformer is used to reduce skewness and make data closer to a normal distribution.
+df[["Maths"]] = pt.fit_transform(df[["Maths"]])
+
+print("\nDataset After Transformation:")
+print(df)
+
