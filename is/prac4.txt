@@ -1,0 +1,38 @@
+4.	Write a C++ program to implement AES Algorithm. 
+
+#include <iostream>
+#include <cstring>
+#include <openssl/aes.h>
+
+using namespace std;
+
+int main() {
+    unsigned char key[16] = "1234567890abcdef"; // 16-byte key
+    AES_KEY enc_key, dec_key;
+
+    AES_set_encrypt_key(key, 128, &enc_key);
+    AES_set_decrypt_key(key, 128, &dec_key);
+
+    unsigned char plainText[16] = "HelloAESWorld!!";
+    unsigned char encrypted[16];
+    unsigned char decrypted[16];
+
+    // Encrypt
+    AES_encrypt(plainText, encrypted, &enc_key);
+
+    // Decrypt
+    AES_decrypt(encrypted, decrypted, &dec_key);
+
+    cout << "Original: " << plainText << endl;
+
+    cout << "Encrypted: ";
+    for (int i = 0; i < 16; i++)
+        printf("%02X ", encrypted[i]);
+
+    cout << endl;
+
+    cout << "Decrypted: " << decrypted << endl;
+
+    return 0;
+}
+
