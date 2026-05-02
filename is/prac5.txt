@@ -1,0 +1,74 @@
+5.	Write a C++ program to implement RSA algorithm. 
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+// Function to find GCD
+int gcd(int a, int b) {
+    while (b != 0) {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+// Function to compute (base^exp) % mod
+long long modExp(long long base, long long exp, long long mod) {
+    long long result = 1;
+    base = base % mod;
+
+    while (exp > 0) {
+        if (exp % 2 == 1)
+            result = (result * base) % mod;
+
+        base = (base * base) % mod;
+        exp = exp / 2;
+    }
+    return result;
+}
+
+int main() {
+    int p, q;
+    cout << "Enter two prime numbers (p and q): ";
+    cin >> p >> q;
+
+    int n = p * q;
+    int phi = (p - 1) * (q - 1);
+
+    int e;
+    cout << "Enter public key (e): ";
+    cin >> e;
+
+    // Check if e is valid
+    if (gcd(e, phi) != 1) {
+        cout << "Invalid e! It must be coprime with phi.\n";
+        return 0;
+    }
+
+    // Find d (private key)
+    int d = 1;
+    while ((d * e) % phi != 1) {
+        d++;
+    }
+
+    cout << "\nPublic Key (e, n): (" << e << ", " << n << ")";
+    cout << "\nPrivate Key (d, n): (" << d << ", " << n << ")\n";
+
+    int msg;
+    cout << "\nEnter message (integer): ";
+    cin >> msg;
+
+    // Encryption: c = (msg^e) % n
+    long long cipher = modExp(msg, e, n);
+    cout << "Encrypted Message: " << cipher << endl;
+
+    // Decryption: m = (cipher^d) % n
+    long long decrypted = modExp(cipher, d, n);
+    cout << "Decrypted Message: " << decrypted << endl;
+
+    return 0;
+}
+
+
