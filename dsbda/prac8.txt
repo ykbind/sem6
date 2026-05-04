@@ -1,0 +1,72 @@
+# ============================================================
+# PRACTICAL: Data Visualization I (FULL AS PER MANUAL)
+# ============================================================
+
+# 1. Import Libraries
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 2. Load Dataset
+titanic = sns.load_dataset('titanic')
+
+# Optional: View Data
+print(titanic.head())
+
+# ============================================================
+# 3. Distributional Plots
+# ============================================================
+
+# 3.1 Histogram (Dist Plot)
+plt.figure()
+sns.histplot(titanic['fare'], kde=True)
+plt.title('Distribution of Fare')
+plt.show()
+
+# 3.2 Joint Plot
+sns.jointplot(x='age', y='fare', data=titanic)
+plt.show()
+
+# 3.3 Pair Plot
+sns.pairplot(titanic[['age', 'fare', 'pclass', 'survived']], hue='survived')
+plt.show()
+
+# 3.4 Rug Plot
+plt.figure()
+sns.rugplot(x='fare', data=titanic)
+plt.title('Rug Plot of Fare')
+plt.show()
+
+# ============================================================
+# 4. Categorical Plots
+# ============================================================
+
+# 4.1 Bar Plot
+plt.figure()
+sns.barplot(x='sex', y='survived', data=titanic)
+plt.title('Survival Rate by Gender')
+plt.show()
+
+# 4.2 Count Plot
+plt.figure()
+sns.countplot(x='pclass', hue='survived', data=titanic)
+plt.title('Survival Count by Class')
+plt.show()
+
+# 4.3 Box Plot
+plt.figure()
+sns.boxplot(x='pclass', y='age', data=titanic)
+plt.title('Age Distribution by Class')
+plt.show()
+
+# 4.4 Violin Plot
+plt.figure()
+sns.violinplot(x='sex', y='age', data=titanic)
+plt.title('Age Distribution by Gender')
+plt.show()
+
+# ============================================================
+# Conclusion:
+# Various visualization techniques like histogram, joint plot,
+# pair plot, rug plot, bar plot, count plot, box plot and
+# violin plot were used to analyze patterns in Titanic dataset.
+# ============================================================

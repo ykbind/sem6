@@ -1,11 +1,11 @@
 # ============================================================
-# PRACTICAL: Logistic Regression on Social_Network_Ads Dataset
+# PRACTICAL: Naive Bayes Classification on iris.csv Dataset
 # Title:
-# 1. Implement Logistic Regression for Classification
-# 2. Compute Confusion Matrix and Evaluation Metrics
-# Dataset File: Social_Network_Ads.csv
+# 1. Implement Simple Naive Bayes Classification Algorithm
+# 2. Compute Confusion Matrix and Performance Metrics
+# Dataset File: iris.csv
 # ============================================================
-# Custom Dataset Was Used for the following practical adjust the code as per the given dataset
+
 # ============================================================
 # 1. Import Required Libraries
 # ============================================================
@@ -14,15 +14,14 @@ import pandas as pd
 import numpy as np
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score
 
 # ============================================================
 # 2. Load Dataset
 # ============================================================
 
-df = pd.read_csv("Social_Network_Ads.csv")
+df = pd.read_csv("iris.csv")
 
 print("First 5 Rows:")
 print(df.head())
@@ -40,59 +39,39 @@ print(df.columns)
 print("\nMissing Values:")
 print(df.isnull().sum())
 
-# Fill missing numeric values with mean (if any)
-df.fillna(df.mean(numeric_only=True), inplace=True)
-
 # ============================================================
-# 4. Convert Categorical Data into Numeric
-# Gender Column (if present)
+# 4. Select Features and Target
 # ============================================================
 
-if "Gender" in df.columns:
-    le = LabelEncoder()
-    df["Gender"] = le.fit_transform(df["Gender"])
+X = df.drop("species", axis=1)
+y = df["species"]
 
 # ============================================================
-# 5. Select Features and Target
-# Usually target column = Purchased
-# ============================================================
-
-X = df.drop("Purchased", axis=1)
-y = df["Purchased"]
-
-# ============================================================
-# 6. Split Dataset into Training and Testing Data
+# 5. Split Dataset into Training and Testing Data
 # ============================================================
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.25, random_state=42
+    X, y, test_size=0.30, random_state=42
 )
 
 # ============================================================
-# 7. Feature Scaling
+# 6. Train Gaussian Naive Bayes Model
 # ============================================================
 
-scaler = StandardScaler()
-
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
-# ============================================================
-# 8. Train Logistic Regression Model
-# ============================================================
-
-model = LogisticRegression()
-
+model = GaussianNB()
 model.fit(X_train, y_train)
 
 # ============================================================
-# 9. Predict Results
+# 7. Predict Results
 # ============================================================
 
 y_pred = model.predict(X_test)
 
+print("\nPredicted Values:")
+print(y_pred[:10])
+
 # ============================================================
-# 10. Confusion Matrix
+# 8. Confusion Matrix
 # ============================================================
 
 cm = confusion_matrix(y_test, y_pred)
@@ -100,22 +79,28 @@ cm = confusion_matrix(y_test, y_pred)
 print("\nConfusion Matrix:")
 print(cm)
 
-TN = cm[0][0]
-FP = cm[0][1]
-FN = cm[1][0]
-TP = cm[1][1]
+# ============================================================
+# For Multi-Class Iris Dataset:
+# setosa = Positive Class (One-vs-Rest Example)
+# ============================================================
 
-print("\nTN =", TN)
+# Using first class values
+TP = cm[0][0]
+FP = cm[:,0].sum() - TP
+FN = cm[0,:].sum() - TP
+TN = cm.sum() - (TP + FP + FN)
+
+print("\nTP =", TP)
 print("FP =", FP)
 print("FN =", FN)
-print("TP =", TP)
+print("TN =", TN)
 
 # ============================================================
-# 11. Evaluation Metrics
+# 9. Performance Metrics
 # ============================================================
 
 accuracy = (TP + TN) / (TP + TN + FP + FN)
-error_rate = (FP + FN) / (TP + TN + FP + FN)
+error_rate = 1 - accuracy
 precision = TP / (TP + FP)
 recall = TP / (TP + FN)
 
@@ -126,8 +111,15 @@ print("Precision  =", precision)
 print("Recall     =", recall)
 
 # ============================================================
+# Extra Accuracy using sklearn
+# ============================================================
+
+print("\nOverall Accuracy Score:")
+print(accuracy_score(y_test, y_pred))
+
+# ============================================================
 # Conclusion:
-# Logistic Regression was applied successfully on
-# Social_Network_Ads dataset and performance was
-# evaluated using confusion matrix metrics.
+# Gaussian Naive Bayes was applied successfully on
+# Iris dataset and model performance was evaluated
+# using confusion matrix metrics.
 # ============================================================

@@ -1,0 +1,125 @@
+# ============================================================
+# PRACTICAL: Text Analysis using TF-IDF Algorithm
+# Using Simple Words and Sentences
+# ============================================================
+
+# ============================================================
+# 1. Import Required Libraries
+# ============================================================
+
+import nltk
+import pandas as pd
+
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk import pos_tag
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# ============================================================
+# 2. Download Required NLTK Packages (Run once)
+# ============================================================
+
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
+
+# ============================================================
+# 3. Sample Simple Document
+# ============================================================
+
+text = "Ravi is reading a book. He likes reading books."
+
+print("Original Text:\n")
+print(text)
+
+# ============================================================
+# 4. Tokenization
+# ============================================================
+
+tokens = word_tokenize(text)
+
+print("\nTokens:")
+print(tokens)
+
+# ============================================================
+# 5. POS Tagging
+# ============================================================
+
+pos_tags = pos_tag(tokens)
+
+print("\nPOS Tags:")
+print(pos_tags)
+
+# ============================================================
+# 6. Stopwords Removal
+# ============================================================
+
+stop_words = set(stopwords.words('english'))
+
+filtered_words = [word for word in tokens if word.lower() not in stop_words and word.isalpha()]
+
+print("\nAfter Stopwords Removal:")
+print(filtered_words)
+
+# ============================================================
+# 7. Stemming
+# ============================================================
+
+ps = PorterStemmer()
+
+stemmed_words = [ps.stem(word) for word in filtered_words]
+
+print("\nStemmed Words:")
+print(stemmed_words)
+
+# ============================================================
+# 8. Lemmatization
+# ============================================================
+
+lemmatizer = WordNetLemmatizer()
+
+lemmatized_words = [lemmatizer.lemmatize(word) for word in filtered_words]
+
+print("\nLemmatized Words:")
+print(lemmatized_words)
+
+# ============================================================
+# 9. TF-IDF Representation
+# ============================================================
+
+
+
+documents = [
+    "cat likes milk",
+    "dog likes food",
+    "cat and dog are animals"
+]
+
+vectorizer = TfidfVectorizer()
+
+tfidf_matrix = vectorizer.fit_transform(documents)
+
+# THIS LINE WAS MISSING
+tfidf_df = pd.DataFrame(
+    tfidf_matrix.toarray(),
+    columns=vectorizer.get_feature_names_out()
+)
+
+feature_names = vectorizer.get_feature_names_out()
+
+print("\nTF-IDF Feature Names:")
+print(feature_names)
+
+print("\nTF-IDF Matrix:")
+print(tfidf_df)
+
+# ============================================================
+# Conclusion:
+# Document preprocessing methods such as tokenization,
+# POS tagging, stopwords removal, stemming and
+# lemmatization were applied successfully.
+# TF-IDF converted text data into numerical form.
+# ============================================================

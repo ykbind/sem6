@@ -1,0 +1,65 @@
+# ============================================================
+# PRACTICAL: Data Visualization III
+# ============================================================
+
+# 1. Import Libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# ============================================================
+# 2. Load Iris Dataset
+# ============================================================
+
+iris = sns.load_dataset('iris')
+
+print("First 5 Rows:")
+print(iris.head())
+
+print("\nDataset Info:")
+print(iris.info())
+
+# ============================================================
+# 1. Features and their Types
+# ============================================================
+
+print("\nFeature Types:")
+print(iris.dtypes)
+
+# ============================================================
+# 2. Histograms for each Feature
+# ============================================================
+
+features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+
+for feature in features:
+    plt.figure()
+    sns.histplot(data=iris, x=feature, kde=True)
+    plt.title(f"Histogram of {feature}")
+    plt.show()
+
+# ============================================================
+# 3. Box Plots for each Feature
+# ============================================================
+
+for feature in features:
+    plt.figure()
+    sns.boxplot(x=iris[feature])
+    plt.title(f"Box Plot of {feature}")
+    plt.show()
+
+# ============================================================
+# 4. Box Plot with Species Comparison (Better Analysis)
+# ============================================================
+
+for feature in features:
+    plt.figure()
+    sns.boxplot(x='species', y=feature, data=iris)
+    plt.title(f"{feature} vs Species")
+    plt.show()
+
+# ============================================================
+# Conclusion:
+# Histograms and box plots were used to analyze feature
+# distributions and detect outliers in Iris dataset.
+# ============================================================
