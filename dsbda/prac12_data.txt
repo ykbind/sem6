@@ -1,0 +1,8 @@
+Temperature,DewPoint,WindSpeed
+30,20,15
+32,22,12
+28,18,10
+35,25,20
+31,21,14
+
+# rename the file into sample_weather.txt

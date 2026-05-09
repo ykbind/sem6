@@ -1,0 +1,80 @@
+// ============================================================
+// PRACTICAL: Scala Program using Apache Spark
+// Generate Even, Odd Numbers and Fibonacci Series
+// ============================================================
+
+// Import Spark Libraries
+import org.apache.spark.sql.SparkSession
+
+// Create Spark Session
+val spark = SparkSession.builder()
+    .appName("EvenOddFibonacci")
+    .master("local[*]")
+    .getOrCreate()
+
+// Create Spark Context
+val sc = spark.sparkContext
+
+// ============================================================
+// 1. Generate Numbers from 1 to 20
+// ============================================================
+
+val numbers = 1 to 20
+
+// Create RDD
+val numRDD = sc.parallelize(numbers)
+
+// ============================================================
+// 2. Find Even Numbers
+// ============================================================
+
+val evenNumbers = numRDD.filter(x => x % 2 == 0)
+
+println("Even Numbers:")
+evenNumbers.collect().foreach(println)
+
+// ============================================================
+// 3. Find Odd Numbers
+// ============================================================
+
+val oddNumbers = numRDD.filter(x => x % 2 != 0)
+
+println("Odd Numbers:")
+oddNumbers.collect().foreach(println)
+
+// ============================================================
+// 4. Fibonacci Function
+// ============================================================
+
+def fibonacci(n: Int): Int = {
+
+    if (n <= 1)
+        n
+    else
+        fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+// Generate Fibonacci Series
+val fibSeries = 0 to 10
+
+// Create Fibonacci RDD
+val fibRDD = sc.parallelize(fibSeries)
+
+// Apply Fibonacci Function
+val fibonacciNumbers = fibRDD.map(x => fibonacci(x))
+
+println("Fibonacci Series:")
+fibonacciNumbers.collect().foreach(println)
+
+// ============================================================
+// Stop Spark Session
+// ============================================================
+
+spark.stop()
+
+// ============================================================
+// Conclusion:
+// Apache Spark with Scala was used successfully to
+// generate even numbers, odd numbers, and Fibonacci
+// series using distributed processing.
+// ============================================================

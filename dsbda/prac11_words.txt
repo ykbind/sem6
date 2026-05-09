@@ -1,0 +1,6 @@
+hello world hello
+big data analytics
+hello Hadoop
+
+
+# change file name to input.txt

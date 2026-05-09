@@ -1,0 +1,42 @@
+# ============================================================
+# PRACTICAL: Weather Data Analysis using Text File
+# ============================================================
+
+# Import pandas library
+import pandas as pd
+
+# ============================================================
+# 1. Read Weather Data File
+# ============================================================
+
+# Load text file
+# Make sure sample_weather.txt is in same folder
+
+df = pd.read_csv("sample_weather.txt")
+
+# Display dataset
+print("Weather Dataset:")
+print(df)
+
+# ============================================================
+# 2. Calculate Average Values
+# ============================================================
+
+avg_temperature = df["Temperature"].mean()
+avg_dewpoint = df["DewPoint"].mean()
+avg_windspeed = df["WindSpeed"].mean()
+
+# ============================================================
+# 3. Display Results
+# ============================================================
+
+print("\nAverage Temperature =", avg_temperature)
+print("Average Dew Point   =", avg_dewpoint)
+print("Average Wind Speed  =", avg_windspeed)
+
+# ============================================================
+# Conclusion:
+# Weather data was successfully imported from a text file
+# and average temperature, dew point, and wind speed
+# values were calculated.
+# ============================================================
