@@ -14,27 +14,31 @@ import seaborn as sns
 # Load Dataset
 # ============================================================
 
-columns_names = ['user_id','item_id','rating','timestamp']
+columns_names = ['user_id', 'item_id', 'rating', 'timestamp']
 
-df = pd.read_csv('u.data', sep='\t', names=columns_names)
+df = pd.read_csv(
+    'u.data',
+    sep='\t',
+    names=columns_names
+)
 
-df.head()
-
-# ============================================================
-# Load Movie Titles
-# ============================================================
-
-movie_titles = pd.read_csv('Movie_Id_Titles')
-
-movie_titles.head()
+print(df.head())
 
 # ============================================================
-# Merge Datasets
+# Load Movie Titles Dataset
+# ============================================================
+
+movie_titles = pd.read_csv('Movie_Id_Titles.csv')
+
+print(movie_titles.head())
+
+# ============================================================
+# Merge Both Datasets
 # ============================================================
 
 df = pd.merge(df, movie_titles, on='item_id')
 
-df.head()
+print(df.head())
 
 # ============================================================
 # Set Seaborn Style
@@ -46,13 +50,13 @@ sns.set_style('white')
 # Average Ratings
 # ============================================================
 
-df.groupby('title')['rating'].mean().sort_values(ascending=False).head()
+print(df.groupby('title')['rating'].mean().sort_values(ascending=False))
 
 # ============================================================
 # Number of Ratings
 # ============================================================
 
-df.groupby('title')['rating'].count().sort_values(ascending=False).head()
+print(df.groupby('title')['rating'].count().sort_values(ascending=False))
 
 # ============================================================
 # Create Ratings DataFrame
@@ -60,21 +64,15 @@ df.groupby('title')['rating'].count().sort_values(ascending=False).head()
 
 ratings = pd.DataFrame(df.groupby('title')['rating'].mean())
 
-ratings.head()
-
-# ============================================================
-# Add Number of Ratings Column
-# ============================================================
-
 ratings['num of ratings'] = df.groupby('title')['rating'].count()
 
-ratings.head()
+print(ratings.head())
 
 # ============================================================
 # Histogram of Number of Ratings
 # ============================================================
 
-ratings['num of ratings'].hist(bins=70)
+ratings['num of ratings'].hist(bins=20)
 
 plt.title('Histogram of Number of Ratings')
 
@@ -84,7 +82,7 @@ plt.show()
 # Histogram of Ratings
 # ============================================================
 
-ratings['rating'].hist(bins=70)
+ratings['rating'].hist(bins=20)
 
 plt.title('Histogram of Ratings')
 
@@ -98,8 +96,7 @@ sns.jointplot(
     x='rating',
     y='num of ratings',
     data=ratings,
-    alpha=0.5,
-    color='red'
+    alpha=0.5
 )
 
 plt.show()
@@ -114,16 +111,7 @@ moviemat = df.pivot_table(
     values='rating'
 )
 
-moviemat.head()
-
-# ============================================================
-# Top Rated Movies
-# ============================================================
-
-ratings.sort_values(
-    'num of ratings',
-    ascending=False
-).head(10)
+print(moviemat.head())
 
 # ============================================================
 # User Ratings for Specific Movies
@@ -132,8 +120,6 @@ ratings.sort_values(
 starwars_user_ratings = moviemat['Star Wars (1977)']
 
 liarliar_user_ratings = moviemat['Liar Liar (1997)']
-
-starwars_user_ratings.head()
 
 # ============================================================
 # Correlation with Other Movies
@@ -154,17 +140,6 @@ corr_starwars = pd.DataFrame(
 
 corr_starwars.dropna(inplace=True)
 
-corr_starwars.head()
-
-# ============================================================
-# Top Correlated Movies
-# ============================================================
-
-corr_starwars.sort_values(
-    'Correlation',
-    ascending=False
-).head(10)
-
 # ============================================================
 # Add Number of Ratings
 # ============================================================
@@ -173,18 +148,20 @@ corr_starwars = corr_starwars.join(
     ratings['num of ratings']
 )
 
-corr_starwars.head()
-
 # ============================================================
 # Recommended Movies for Star Wars
 # ============================================================
 
-corr_starwars[
-    corr_starwars['num of ratings'] > 100
-].sort_values(
-    'Correlation',
-    ascending=False
-).head()
+print("\nRecommended Movies similar to Star Wars:\n")
+
+print(
+    corr_starwars[
+        corr_starwars['num of ratings'] >= 1
+    ].sort_values(
+        'Correlation',
+        ascending=False
+    ).head()
+)
 
 # ============================================================
 # Liar Liar Recommendations
@@ -201,9 +178,19 @@ corr_liarliar = corr_liarliar.join(
     ratings['num of ratings']
 )
 
-corr_liarliar[
-    corr_liarliar['num of ratings'] > 100
-].sort_values(
-    'Correlation',
-    ascending=False
-).head()
+print("\nRecommended Movies similar to Liar Liar:\n")
+
+print(
+    corr_liarliar[
+        corr_liarliar['num of ratings'] >= 1
+    ].sort_values(
+        'Correlation',
+        ascending=False
+    ).head()
+)
+
+# ============================================================
+# Conclusion:
+# Recommender system was implemented using correlation
+# between movie ratings.
+# ============================================================
