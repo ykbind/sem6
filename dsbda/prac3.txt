@@ -18,6 +18,9 @@ import numpy as np
 
 df = pd.read_csv("iris.csv")
 
+print(df.isnull().sum())
+
+
 print("First 5 Rows of Dataset:")
 print(df.head())
 
