@@ -17,7 +17,7 @@ df.head()
 
 df.info()
 
-df.describe().transpose()
+df.describe()
 
 # ============================================================
 # Dropping unnecessary columns
