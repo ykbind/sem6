@@ -24,9 +24,9 @@ public class MovieDisplay {
    
         List<String> movie = new List<String>();
 
-        students.add('Name: Dune , Price: 500, Category: Science Fiction');
-        students.add('Name: The Midnight Library, Price: 650, Category: Fantasy');
-        students.add('Name: The Silent Patient, Price:750, Category: Psychological Thriller');
+        moive.add('Name: Dune , Price: 500, Category: Science Fiction');
+        moive.add('Name: The Midnight Library, Price: 650, Category: Fantasy');
+        moive.add('Name: The Silent Patient, Price:750, Category: Psychological Thriller');
 
 
         for(String s : movie) {
