@@ -10,7 +10,9 @@ enable it
 
 click on active cloud shell on right upper corner
 
-git clone your repo
+git clone your repo  
+
+https://github.com/ykbind/cctest.git
 
 run the py file
 
