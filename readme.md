@@ -3,7 +3,6 @@
 For any changes msg me personally with source code and output image.
 
 
-# FOR DSBDA PRACTICAL USE PROPER DATASET AND FEATURE NAME REST I WONT BE RESONSIBILE IF YOU FAIL
 
 ##
 ## Disclaimer
