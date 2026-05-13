@@ -4,6 +4,10 @@ For any changes msg me personally with source code and output image.
 
 
 
+
+
+
+
 ##
 ## Disclaimer
 
@@ -14,3 +18,5 @@ I, the creator, am not responsible for any misuse or misconduct arising from the
 Any actions taken by users are their sole responsibility.
 
 If I am implicated, penalized, or taken into consideration for any misconduct committed by users of this project, I reserve the right to pursue appropriate legal action to protect my rights and interests.
+
+
