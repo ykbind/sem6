@@ -1,0 +1,16 @@
+go to developer salesforce panel
+
+login
+
+click on setting icon on right upper corner 
+
+click on developer console
+
+then file on file and new and apex class 
+
+name it as per wish
+
+add your student management code in it 
+
+debug and run it 
+

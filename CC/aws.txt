@@ -1,0 +1,9 @@
+Search for AWS
+
+Login your account
+
+click on left upper corner three line select all services and click on EC2
+
+click on launch instance
+
+and again launch instance

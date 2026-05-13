@@ -1,0 +1,37 @@
+public class StudentManagement {
+
+    public static void displayStudents() {
+
+        // Predefined students
+        List<String> students = new List<String>();
+
+        students.add('Name: John, Age: 20, Grade: A');
+        students.add('Name: Emma, Age: 19, Grade: B');
+        students.add('Name: David, Age: 21, Grade: A');
+
+        // Display students
+        for(String s : students) {
+
+            System.debug(s);
+        }
+    }
+}
+
+public class MovieDisplay {
+
+    public static void displayMovie() {
+
+   
+        List<String> movie = new List<String>();
+
+        students.add('Name: Dune , Price: 500, Category: Science Fiction');
+        students.add('Name: The Midnight Library, Price: 650, Category: Fantasy');
+        students.add('Name: The Silent Patient, Price:750, Category: Psychological Thriller');
+
+
+        for(String s : movie) {
+
+            System.debug(s);
+        }
+    }
+}

@@ -1,0 +1,16 @@
+first open google cloud console
+
+create new project 
+
+open that project 
+
+search for app engine app ai 
+
+enable it
+
+click on active cloud shell on right upper corner
+
+git clone your repo
+
+run the py file
+
