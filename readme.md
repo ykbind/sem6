@@ -7,7 +7,7 @@ For any changes msg me personally with source code and output image.
 ##
 ## Disclaimer
 
-This repository is provided for educational and research purposes only.
+This repository is provided for educational, reference and research purposes only.
 
 I, the creator, am not responsible for any misuse or misconduct arising from the use of this repository, including but not limited to academic dishonesty, cheating, or violation of any institutional policies.
 
