@@ -4,7 +4,7 @@ create new project
 
 open that project 
 
-search for app engine app ai 
+search for app engine admin api
 
 enable it
 
@@ -12,7 +12,7 @@ click on active cloud shell on right upper corner
 
 git clone your repo  
 
-https://github.com/ykbind/cctest.git
+git clone https://github.com/ykbind/cctest.git
 
 run the py file
 
