@@ -1,40 +1,96 @@
-#in exam you have just replace the content of the codes 
-#here hospital system is used to but you may use your own topic like travel guide or restaurant or education, etc
-#just make sure to ask 5 questions and give suggestions based on the answers
+import tkinter as tk
+from tkinter import scrolledtext
 
-def hospital_expert_system():
-    print("Welcome to Hospital Expert System")
-    print("Answer the following questions.")
-    print("Type 'yes' or 'no'\n")
+root = tk.Tk()
+root.title("Hospital Expert System")
+root.geometry("500x400")
 
-    fever = input("Do you have fever? ").lower()
-    cough = input("Do you have cough? ").lower()
-    chest_pain = input("Do you have chest pain? ").lower()
-    injury = input("Do you have any injury or fracture? ").lower()
-    stomach_pain = input("Do you have stomach pain? ").lower()
+questions = [
+    "Do you have fever?",
+    "Do you have cough?",
+    "Do you have chest pain?",
+    "Do you have any injury or fracture?",
+    "Do you have stomach pain?"
+]
 
-    print("\n--- Diagnosis Suggestion ---")
+answers = {}
+current_question = 0
 
-    if fever == "yes" and cough == "yes":
-        print("You may have a viral infection or flu.")
-        print("Suggested Department: General Medicine")
+# Display area
+display = scrolledtext.ScrolledText(root, height=15, width=50, state=tk.DISABLED)
+display.pack(padx=10, pady=10)
 
-    elif chest_pain == "yes":
-        print("You may need a heart check-up.")
-        print("Suggested Department: Cardiology")
+# Input field
+entry = tk.Entry(root, width=50)
+entry.pack(padx=10, pady=5)
 
-    elif injury == "yes":
-        print("You may require bone or injury treatment.")
-        print("Suggested Department: Orthopedics")
-
-    elif stomach_pain == "yes":
-        print("You may have digestive issues.")
-        print("Suggested Department: Gastroenterology")
-
+def send_message():
+    global current_question
+    user_input = entry.get().strip().lower()
+    entry.delete(0, tk.END)
+    
+    if not user_input:
+        return
+    
+    if user_input not in ["yes", "no"]:
+        display.config(state=tk.NORMAL)
+        display.insert(tk.END, "Error: Please enter 'yes' or 'no'\n\n")
+        display.config(state=tk.DISABLED)
+        display.see(tk.END)
+        return
+    
+    # Display question and answer
+    display.config(state=tk.NORMAL)
+    display.insert(tk.END, "Q: " + questions[current_question] + "\n")
+    display.insert(tk.END, "A: " + user_input + "\n\n")
+    
+    answers[current_question] = user_input
+    current_question += 1
+    
+    if current_question < len(questions):
+        display.insert(tk.END, "Next: " + questions[current_question] + "\n\n")
     else:
-        print("Please consult a General Physician for further diagnosis.")
+        show_result()
+    
+    display.config(state=tk.DISABLED)
+    display.see(tk.END)
 
-    print("\nThank you for using Hospital Expert System.")
+def show_result():
+    fever = answers.get(0, "no")
+    cough = answers.get(1, "no")
+    chest_pain = answers.get(2, "no")
+    injury = answers.get(3, "no")
+    stomach_pain = answers.get(4, "no")
+    
+    display.config(state=tk.NORMAL)
+    display.insert(tk.END, "--- Diagnosis Suggestion ---\n")
+    
+    if fever == "yes" and cough == "yes":
+        diagnosis = "You may have a viral infection or flu.\nSuggested Department: General Medicine"
+    elif chest_pain == "yes":
+        diagnosis = "You may need a heart check-up.\nSuggested Department: Cardiology"
+    elif injury == "yes":
+        diagnosis = "You may require bone or injury treatment.\nSuggested Department: Orthopedics"
+    elif stomach_pain == "yes":
+        diagnosis = "You may have digestive issues.\nSuggested Department: Gastroenterology"
+    else:
+        diagnosis = "Please consult a General Physician for further diagnosis."
+    
+    display.insert(tk.END, diagnosis + "\n")
+    display.config(state=tk.DISABLED)
+    display.see(tk.END)
+    entry.config(state=tk.DISABLED)
 
+# Send button
+btn = tk.Button(root, text="Send", command=send_message)
+btn.pack(pady=5)
 
-hospital_expert_system()
+entry.bind("<Return>", lambda e: send_message())
+
+# Welcome message
+display.config(state=tk.NORMAL)
+display.insert(tk.END, "Welcome to Hospital Expert System!\nAnswer the following questions with 'yes' or 'no'.\n\n")
+display.insert(tk.END, "First: " + questions[0] + "\n\n")
+display.config(state=tk.DISABLED)
+
+root.mainloop()
